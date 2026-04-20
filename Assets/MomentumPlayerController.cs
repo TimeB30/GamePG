@@ -64,11 +64,14 @@ public class MomentumPlayerController : MonoBehaviour
             RotatePlayer(input);
         }
 
+        // Check for jump input
         if (jumpPressed && isGrounded)
         {
             Jump();
-            jumpPressed = false;
         }
+
+        // Reset jump input flag at the end of the physics frame
+        jumpPressed = false;
     }
 
     void CheckGround()
