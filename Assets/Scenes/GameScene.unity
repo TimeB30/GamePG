@@ -119,6 +119,37 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &384050507
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 384050508}
+  m_Layer: 0
+  m_Name: SkinContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &384050508
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 384050507}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1362962902}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -300,9 +331,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 3796911526641909989, guid: c6c4f73043e2ce44b970cf4a301fc6a5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 384050508}
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6686857180365460732, guid: c6c4f73043e2ce44b970cf4a301fc6a5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1362962903}
   m_SourcePrefab: {fileID: 100100000, guid: c6c4f73043e2ce44b970cf4a301fc6a5, type: 3}
+--- !u!1 &698609464 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6686857180365460732, guid: c6c4f73043e2ce44b970cf4a301fc6a5, type: 3}
+  m_PrefabInstance: {fileID: 698609463}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &768923736
 GameObject:
   m_ObjectHideFlags: 0
@@ -483,7 +525,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0fb657b72febc045ab4952784b796d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  coinText: {fileID: 1570287067}
 --- !u!4 &833599672
 Transform:
   m_ObjectHideFlags: 0
@@ -817,6 +858,24 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3796911526641909989, guid: c6c4f73043e2ce44b970cf4a301fc6a5, type: 3}
   m_PrefabInstance: {fileID: 698609463}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1362962903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 698609464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f37eacce194b842449baa2d5b87dd943, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerSkinLoader
+  skins:
+  - {fileID: 11400000, guid: c94973018510b5d45a53e19f65f63b04, type: 2}
+  - {fileID: 11400000, guid: cc9e0528fa82dd1488b99e65b676604b, type: 2}
+  - {fileID: 11400000, guid: 27da6f9e5d19d2042b34e2be9ebcf9dc, type: 2}
+  - {fileID: 11400000, guid: a675b2bbb70fa3745a5eee7c4f8d6acb, type: 2}
+  skinContainer: {fileID: 384050508}
 --- !u!1 &1372318513
 GameObject:
   m_ObjectHideFlags: 0
@@ -846,11 +905,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac09f9a381283f14b948c53d1d6a7949, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelGenerator
-  numberOfPlatforms: 2
-  startPosition: {x: 0, y: 0, z: 0}
-  platformOffset: {x: 0, y: 0, z: 10}
   startPlatformPrefab: {fileID: 5370106508399347464, guid: 2a6405c9043a7414592849ff0697e5fc, type: 3}
   finishPlatformPrefab: {fileID: 5370106508399347464, guid: 2a6405c9043a7414592849ff0697e5fc, type: 3}
+  finishFlagPrefab: {fileID: 1084964870776206722, guid: 078135468fead5c4c85c44f4c985318f, type: 3}
   platformTypes:
   - prefab: {fileID: 8174889597251835406, guid: ab0b89dfbf32cae47b57cc68536bff00, type: 3}
     spawnChance: 1
@@ -866,7 +923,7 @@ MonoBehaviour:
     movingChance: 0
   coinPrefab: {fileID: 3454465656641375382, guid: 7d2604c9395f703439c461f0211eba0a, type: 3}
   coinOffset: {x: 0, y: 1, z: 0}
-  coinSpawnChance: 1
+  startPosition: {x: 0, y: 0, z: 0}
 --- !u!4 &1372318515
 Transform:
   m_ObjectHideFlags: 0
@@ -1020,7 +1077,7 @@ GameObject:
   - component: {fileID: 1570287067}
   m_Layer: 5
   m_Name: Text (TMP)
-  m_TagString: Untagged
+  m_TagString: CoinCounter
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1041,7 +1098,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -100, y: -20}
+  m_AnchoredPosition: {x: -200, y: -50}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1570287067

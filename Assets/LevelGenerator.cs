@@ -24,6 +24,7 @@ public class LevelGenerator : MonoBehaviour
     [Header("Start/Finish Platforms")]
     public GameObject startPlatformPrefab;
     public GameObject finishPlatformPrefab;
+    public GameObject finishFlagPrefab; // Ассет для флажка
 
     [Header("Platform Types")]
     public List<PlatformType> platformTypes;
@@ -101,7 +102,7 @@ public class LevelGenerator : MonoBehaviour
             }
         }
 
-        // 3. Создаем финишную платформу
+        // 3. Создаем финишную платформу и флажок
         if (finishPlatformPrefab != null)
         {
             Collider prefabCollider = GetCollider(finishPlatformPrefab);
@@ -111,7 +112,20 @@ public class LevelGenerator : MonoBehaviour
                 Vector3 finishPlatformCenter = nextPlatformStartPosition;
                 finishPlatformCenter.z += halfZ;
 
-                Instantiate(finishPlatformPrefab, finishPlatformCenter, Quaternion.identity, transform);
+                GameObject finishPlatformInstance = Instantiate(finishPlatformPrefab, finishPlatformCenter, Quaternion.identity, transform);
+
+                // Создаем флажок на финишной платформе
+                if (finishFlagPrefab != null)
+                {
+                    Collider finishCollider = GetCollider(finishPlatformInstance);
+                    Vector3 flagPosition = new Vector3(
+                        finishPlatformInstance.transform.position.x,
+                        finishCollider.bounds.max.y, // Ставим на верхнюю точку платформы
+                        finishPlatformInstance.transform.position.z
+                    );
+                    // ИЗМЕНЕНИЕ: Последний аргумент изменен на 'transform', чтобы флаг не наследовал масштаб платформы
+                    Instantiate(finishFlagPrefab, flagPosition, Quaternion.identity, transform);
+                }
             }
         }
     }
