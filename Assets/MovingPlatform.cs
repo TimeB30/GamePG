@@ -36,16 +36,5 @@ public class MovingPlatform : MonoBehaviour
         platformRb.MovePosition(targetPosition);
     }
 
-    // Возвращаемся к реализации, которая позволяет проскальзывание
-    // Игрок не будет делаться дочерним объектом
-    private void OnCollisionStay(Collision collision)
-    {
-        // В этой реализации игрок будет проскальзывать,
-        // но не будет конфликтов с его Rigidbody.
-        // Если нужно, чтобы игрок двигался с платформой без SetParent,
-        // это требует более сложной логики, например, применения силы к игроку.
-    }
-
-    private void OnCollisionEnter(Collision collision) { }
-    private void OnCollisionExit(Collision collision) { }
+    
 }
