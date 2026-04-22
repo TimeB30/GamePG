@@ -5,18 +5,18 @@ using System.Collections.Generic;
 public class SkinShopManager : MonoBehaviour
 {
     [Header("Skins")]
-    public List<CharacterSkin> skins; // Список всех доступных скинов (перетащите сюда ваши ассеты скинов)
+    public List<CharacterSkin> skins;
 
     [Header("UI Elements")]
     public TextMeshProUGUI skinNameText;
-    public TextMeshProUGUI coinText; // Для отображения текущего баланса
+    public TextMeshProUGUI coinText;
     public GameObject buyButton;
     public TextMeshProUGUI buyButtonText;
     public GameObject selectButton;
     public GameObject selectedButton;
 
     [Header("Shop Settings")]
-    public Transform modelSpawnPoint; // Точка, где будет появляться моделька персонажа
+    public Transform modelSpawnPoint;
     public float rotationSpeed = 50f;
 
     private int currentSkinIndex = 0;
@@ -27,7 +27,6 @@ public class SkinShopManager : MonoBehaviour
 
     void Start()
     {
-        // Загружаем выбранный скин или устанавливаем по умолчанию
         currentSkinIndex = PlayerPrefs.GetInt(SelectedSkinKey, GetDefaultSkinIndex());
         
         SpawnModel();
@@ -37,7 +36,6 @@ public class SkinShopManager : MonoBehaviour
 
     void Update()
     {
-        // Вращаем модельку
         if (currentModelInstance != null)
         {
             currentModelInstance.transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
@@ -49,7 +47,7 @@ public class SkinShopManager : MonoBehaviour
         currentSkinIndex++;
         if (currentSkinIndex >= skins.Count)
         {
-            currentSkinIndex = 0; // Циклический переход к первому скину
+            currentSkinIndex = 0;
         }
         SpawnModel();
         UpdateUI();
@@ -68,13 +66,17 @@ public class SkinShopManager : MonoBehaviour
         else
         {
             Debug.Log("Not enough coins!");
-            // Здесь можно добавить анимацию дрожания кнопки или звук ошибки
         }
     }
 
     public void SelectSkin()
     {
         PlayerPrefs.SetInt(SelectedSkinKey, currentSkinIndex);
+        PlayerPrefs.Save(); 
+        
+        // --- ОТЛАДОЧНОЕ СООБЩЕНИЕ ---
+        Debug.Log($"[SkinShopManager] Сохранен скин с индексом: {currentSkinIndex}");
+
         UpdateUI();
     }
 
@@ -88,10 +90,7 @@ public class SkinShopManager : MonoBehaviour
         if (modelSpawnPoint != null && skins.Count > 0)
         {
             CharacterSkin skin = skins[currentSkinIndex];
-            
-            // Создаем нужную ротацию: ротация точки спавна + поворот на 180 градусов по оси Y
             Quaternion initialRotation = modelSpawnPoint.rotation * Quaternion.Euler(0, 180f, 0);
-            
             currentModelInstance = Instantiate(skin.skinPrefab, modelSpawnPoint.position, initialRotation, modelSpawnPoint);
         }
     }
@@ -147,6 +146,7 @@ public class SkinShopManager : MonoBehaviour
     private void UnlockSkin(int index)
     {
         PlayerPrefs.SetInt(UnlockedSkinKeyPrefix + index, 1);
+        PlayerPrefs.Save();
     }
 
     private int GetDefaultSkinIndex()

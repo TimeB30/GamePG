@@ -4,10 +4,10 @@ using System.Collections.Generic;
 public class PlayerSkinLoader : MonoBehaviour
 {
     [Header("Skins")]
-    public List<CharacterSkin> skins; // Тот же список скинов, что и в магазине
+    public List<CharacterSkin> skins;
 
     [Header("Player Settings")]
-    public Transform skinContainer; // Объект, внутри которого будет создана модель скина
+    public Transform skinContainer;
 
     private const string SelectedSkinKey = "SelectedSkinIndex";
 
@@ -18,24 +18,31 @@ public class PlayerSkinLoader : MonoBehaviour
 
     private void LoadPlayerSkin()
     {
-        int selectedSkinIndex = PlayerPrefs.GetInt(SelectedSkinKey, GetDefaultSkinIndex());
+        int defaultSkinIndex = GetDefaultSkinIndex();
+        int selectedSkinIndex = PlayerPrefs.GetInt(SelectedSkinKey, defaultSkinIndex);
+
+        // --- ОТЛАДОЧНОЕ СООБЩЕНИЕ ---
+        Debug.Log($"[PlayerSkinLoader] Загружен индекс скина: {selectedSkinIndex}. (Дефолтный: {defaultSkinIndex})");
 
         if (selectedSkinIndex >= 0 && selectedSkinIndex < skins.Count)
         {
             CharacterSkin selectedSkin = skins[selectedSkinIndex];
             
-            // Удаляем старую модель, если она есть
             foreach (Transform child in skinContainer)
             {
                 Destroy(child.gameObject);
             }
 
-            // Создаем и размещаем новую модель
             Instantiate(selectedSkin.skinPrefab, skinContainer.position, skinContainer.rotation, skinContainer);
         }
         else
         {
-            Debug.LogError("Selected skin index is out of range!");
+            Debug.LogError($"[PlayerSkinLoader] Ошибка! Индекс {selectedSkinIndex} вне диапазона. Загружаем дефолтный скин.");
+            // Загружаем дефолтный скин в случае ошибки
+            if (defaultSkinIndex >= 0 && defaultSkinIndex < skins.Count)
+            {
+                Instantiate(skins[defaultSkinIndex].skinPrefab, skinContainer.position, skinContainer.rotation, skinContainer);
+            }
         }
     }
 
